@@ -26,6 +26,7 @@ function validateInput(testInput) {
 }
 
 function formSubmission (document, list, pilot, copilot, fuelLevel, cargoLevel) {
+    
     let pilotStatus = document.getElementById('pilotStatus');
     let copilotStatus = document.getElementById('copilotStatus');
     let fuelStatus = document.getElementById('fuelStatus');
@@ -43,29 +44,32 @@ function formSubmission (document, list, pilot, copilot, fuelLevel, cargoLevel) 
         alert('Make sure to enter valid information!');
     } 
     else {
+    pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
+    copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
     
-    pilotStatus.innerHTML = `Pilot ${pilot} is ready for Launch`;
-    copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for Launch`;
-    
-    }
+    // console.log(pilot)
+    // console.log(fuelLevel)
+    // console.log(cargoLevel)
 
-    if (fuelLevel < 10000) {
+    if (Number(fuelLevel) < 10000 && cargoLevel <= 10000) {
         list.style.visibility = "visible";
         fuelStatus.innerHTML = "Fuel level too low for launch";
+        cargoStatus.innerHTML = "Cargo mass low enough for launch";
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-        launchStatus.style.color = "rgb(199, 37, 78)";
-    } else if (cargoLevel > 10000) {
+        launchStatus.style.color = "red";
+    } else if (Number(cargoLevel) > 10000) {
         list.style.visibility = "visible";
-        cargoStatus.innerHTML = "Cargo mass too heavy for launch";
-        launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-        launchStatus.style.color = "rgb(199, 37, 78)";
-    } else if (cargoLevel < 10000 && fuelLevel > 10000) {
-        fuelStatus.innerHTML = "Enough fuel for journey";
+        cargoStatus.innerHTML = `Cargo mass too heavy for launch`;
+        launchStatus.innerHTML = "Shuttle Not Ready for launch";
+        launchStatus.style.color = "red";
+    } else if (Number(cargoLevel) < 10000 && Number(fuelLevel) > 10000) {
         list.style.visibility = "visible";
-        cargoStatus.innerHTML = "Cargo light enough for takeoff";
-        launchStatus.innerHTML = "Shuttle Not Ready for Launch";
-        launchStatus.style.color = "rgb(199, 37, 78)";
+        fuelStatus.innerHTML = "Fuel level high enough for launch";
+        cargoStatus.innerHTML = "Cargo mass low enough for launch";
+        launchStatus.innerHTML = "Shuttle Ready for Launch";
+        launchStatus.style.color = "green";
     }
+}
 
 }
 
